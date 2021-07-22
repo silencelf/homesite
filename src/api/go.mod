@@ -1,4 +1,4 @@
-module homesite.com
+module homesite
 
 go 1.16
 
