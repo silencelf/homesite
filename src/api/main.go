@@ -10,7 +10,7 @@ import (
 )
 
 func main() {
-	var port = flag.String("p", "80", "port")
+	var port = flag.String("a", ":80", "listening address")
 	flag.Parse()
 	router := gin.Default()
 
@@ -21,5 +21,5 @@ func main() {
 	controllers.Register(router)
 
 	log.Print("web is running...")
-	router.Run(":" + *port)
+	router.Run(*port)
 }
