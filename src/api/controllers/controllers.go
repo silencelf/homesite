@@ -19,6 +19,12 @@ func Register(router *gin.Engine) {
 		})
 	})
 
+	router.GET("/layout", func(c *gin.Context) {
+		c.HTML(http.StatusOK, "layout.html", gin.H{
+			"title": "welcome!",
+		})
+	})
+
 	router.GET("/user/:name", func(c *gin.Context) {
 		name := c.Param("name")
 		c.String(http.StatusOK, "Hello %s", name)
