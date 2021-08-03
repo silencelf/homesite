@@ -1,4 +1,4 @@
-function Container() {
+function Container(props) {
 	return (
 		<div className="container">
 			<main role="main" className="pb-3">
