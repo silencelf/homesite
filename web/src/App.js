@@ -1,5 +1,4 @@
 import './App.css';
-import Container from './layout/Home';
 import Footer from './layout/footer';
 import Header from './layout/header';
 import Game from './tictactoe/game';
