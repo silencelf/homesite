@@ -2,12 +2,12 @@ import './App.css';
 import Footer from './layout/footer';
 import Header from './layout/header';
 import Game from './tictactoe/game';
+import Home from './layout/home';
 import {
   BrowserRouter as Router,
   Switch,
   Route,
 } from "react-router-dom";
-import Home from './layout/Home';
 
 
 function App() {
