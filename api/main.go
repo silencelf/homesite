@@ -10,7 +10,7 @@ import (
 )
 
 func main() {
-	var addr = flag.String("a", ":80", "listening address")
+	var addr = flag.String("a", ":8080", "listening address")
 	flag.Parse()
 	router := gin.Default()
 
