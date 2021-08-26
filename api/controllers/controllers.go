@@ -4,6 +4,7 @@ import (
 	"homesite/models"
 	"log"
 	"net/http"
+	"os/exec"
 
 	"github.com/gin-gonic/gin"
 )
@@ -49,5 +50,14 @@ func Register(router *gin.Engine) {
 		c.JSON(200, gin.H{
 			"message": "pong",
 		})
+	})
+
+	router.GET("/ips", func(c *gin.Context) {
+		ls := exec.Command("ls")
+		b, err := ls.CombinedOutput()
+		if err != nil {
+			c.String(http.StatusInternalServerError, err.Error())
+		}
+		c.String(http.StatusOK, string(b))
 	})
 }
