@@ -7,6 +7,10 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+var (
+	saving models.Saving
+)
+
 func SetSavingRoutes(router *gin.Engine) {
 	router.POST("/saving", func(c *gin.Context) {
 		var amount models.AddSavingModel

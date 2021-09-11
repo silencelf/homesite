@@ -8,6 +8,10 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+var (
+	comments []models.Comment = []models.Comment{}
+)
+
 func SetCommentsRoutes(router *gin.Engine) {
 	router.GET("/comments", func(c *gin.Context) {
 		c.JSON(http.StatusOK, comments)

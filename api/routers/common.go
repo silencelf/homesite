@@ -1,16 +1,10 @@
 package routers
 
 import (
-	"homesite/models"
 	"net/http"
 	"os/exec"
 
 	"github.com/gin-gonic/gin"
-)
-
-var (
-	saving   models.Saving
-	comments []models.Comment
 )
 
 func SetCommonRoutes(router *gin.Engine) {

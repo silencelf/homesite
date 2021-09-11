@@ -14,6 +14,8 @@ func main() {
 	flag.Parse()
 	engine := gin.Default()
 
+	engine.Use(gin.Logger())
+	engine.Use(gin.Recovery())
 	engine.Use(favicon.New("./favicon.ico"))
 	engine.Static("/assets", "./assets/")
 	engine.LoadHTMLGlob("templates/*")
