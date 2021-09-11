@@ -9,5 +9,6 @@ func New() Saving {
 }
 
 type AddSavingModel struct {
+	UserID int     `json:"userId"`
 	Amount float64 `json:"amount"`
 }

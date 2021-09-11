@@ -2,7 +2,7 @@ package main
 
 import (
 	"flag"
-	"homesite/controllers"
+	"homesite/routers"
 	"log"
 
 	"github.com/gin-gonic/gin"
@@ -12,14 +12,14 @@ import (
 func main() {
 	var addr = flag.String("a", ":5000", "listening address")
 	flag.Parse()
-	router := gin.Default()
+	engine := gin.Default()
 
-	router.Use(favicon.New("./favicon.ico"))
-	router.Static("/assets", "./assets/")
-	router.LoadHTMLGlob("templates/*")
+	engine.Use(favicon.New("./favicon.ico"))
+	engine.Static("/assets", "./assets/")
+	engine.LoadHTMLGlob("templates/*")
 
-	controllers.Register(router)
+	routers.InitRoutes(engine)
 
 	log.Print("web is running...")
-	router.Run(*addr)
+	engine.Run(*addr)
 }
