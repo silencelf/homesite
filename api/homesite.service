@@ -1,0 +1,12 @@
+[Unit]
+Description=home site
+After=multi-user.target
+
+[Service]
+WorkingDirectory=/var/homesite/api/
+User=root
+Group=root
+ExecStart=/var/homesite/api/main
+
+[Install]
+WantedBy=multi-user.target

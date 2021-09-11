@@ -10,7 +10,7 @@ import (
 )
 
 func main() {
-	var addr = flag.String("a", ":5000", "listening address")
+	var addr = flag.String("a", ":8080", "listening address")
 	flag.Parse()
 	engine := gin.Default()
 
