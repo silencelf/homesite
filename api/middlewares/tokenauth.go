@@ -2,7 +2,9 @@ package middlewares
 
 import (
 	"log"
+	"net/http"
 	"os"
+	"strings"
 
 	"github.com/gin-gonic/gin"
 )
@@ -16,18 +18,22 @@ func TokenAuthMiddleware() gin.HandlerFunc {
 
 	// We want to make sure the token is set, bail if not
 	if requiredToken == "" {
-		log.Fatal("Please set API_TOKEN environment variable")
+		log.Println("Warnning: Please set API_TOKEN environment variable")
 	}
 
 	return func(c *gin.Context) {
-		token := c.Request.FormValue("api_token")
+		if !strings.HasPrefix(c.Request.RequestURI, "/api") {
+			c.Next()
+			return
+		}
 
-		if token == "" {
+		token := c.Request.Header[http.CanonicalHeaderKey("api_token")]
+		if len(token) == 0 {
 			respondWithError(c, 401, "API token required")
 			return
 		}
 
-		if token != requiredToken {
+		if token[0] != requiredToken {
 			respondWithError(c, 401, "Invalid API token")
 			return
 		}

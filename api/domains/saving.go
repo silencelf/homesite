@@ -6,7 +6,7 @@ import (
 )
 
 type SavingDomain struct {
-	Savings []models.Saving
+	Savings []models.Saving `json:"savings"`
 }
 
 func NewSavingService() SavingDomain {

@@ -14,18 +14,33 @@ var (
 )
 
 func SetSavingRoutes(router *gin.Engine) {
-	router.POST("/saving/:id/details", func(c *gin.Context) {
+	router.POST("/api/savings", func(c *gin.Context) {
+		var saving models.AddSavingModel
+		if err := c.ShouldBind(&saving); err != nil {
+			c.AbortWithStatusJSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+			return
+		}
+		savings.Savings = append(savings.Savings, models.Saving{
+			UserId: saving.UserId,
+			Desc:   saving.Desc,
+			Target: saving.Target,
+		})
+
+		c.String(http.StatusCreated, "ok")
+	})
+
+	router.POST("/api/savings/:id/details", func(c *gin.Context) {
 		id, err := strconv.Atoi(c.Param("id"))
 		if err != nil {
-			c.String(http.StatusBadRequest, "invalid id")
+			c.AbortWithStatusJSON(http.StatusBadRequest, gin.H{"error": "invalid id"})
 		}
 		s, err := savings.FindById(id)
 		if err != nil {
 			c.String(http.StatusNotFound, "not found")
 		}
-		var add models.AddSavingModel
+		var add models.AddSavingDetailModel
 		if err := c.ShouldBind(&add); err != nil {
-			c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+			c.AbortWithStatusJSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 			return
 		}
 		s.Details = append(s.Details, add)
@@ -34,7 +49,11 @@ func SetSavingRoutes(router *gin.Engine) {
 		c.String(http.StatusOK, "ok")
 	})
 
-	router.GET("/savings/:id", func(c *gin.Context) {
+	router.GET("/api/savings", func(c *gin.Context) {
+		c.JSON(200, savings)
+	})
+
+	router.GET("/api/savings/:id", func(c *gin.Context) {
 		id, err := strconv.Atoi(c.Param("id"))
 		if err != nil {
 			c.String(http.StatusBadRequest, "invalid id")
