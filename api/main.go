@@ -2,7 +2,6 @@ package main
 
 import (
 	"flag"
-	"homesite/middlewares"
 	"homesite/routers"
 	"log"
 
@@ -17,7 +16,7 @@ func main() {
 
 	engine.Use(gin.Logger())
 	engine.Use(gin.Recovery())
-	engine.Use(middlewares.TokenAuthMiddleware())
+	//engine.Use(middlewares.TokenAuthMiddleware())
 	engine.Use(favicon.New("./favicon.ico"))
 	engine.Static("/assets", "./assets/")
 	engine.LoadHTMLGlob("templates/*")

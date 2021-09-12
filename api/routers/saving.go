@@ -1,29 +1,49 @@
 package routers
 
 import (
+	"homesite/domains"
 	"homesite/models"
 	"net/http"
+	"strconv"
 
 	"github.com/gin-gonic/gin"
 )
 
 var (
-	saving models.Saving
+	savings = domains.NewSavingService()
 )
 
 func SetSavingRoutes(router *gin.Engine) {
-	router.POST("/saving", func(c *gin.Context) {
-		var amount models.AddSavingModel
-		if err := c.ShouldBind(&amount); err != nil {
+	router.POST("/saving/:id/details", func(c *gin.Context) {
+		id, err := strconv.Atoi(c.Param("id"))
+		if err != nil {
+			c.String(http.StatusBadRequest, "invalid id")
+		}
+		s, err := savings.FindById(id)
+		if err != nil {
+			c.String(http.StatusNotFound, "not found")
+		}
+		var add models.AddSavingModel
+		if err := c.ShouldBind(&add); err != nil {
 			c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 			return
 		}
-		saving.Total += amount.Amount
+		s.Details = append(s.Details, add)
+		s.Achieved += add.Amount
 
 		c.String(http.StatusOK, "ok")
 	})
 
-	router.GET("/saving", func(c *gin.Context) {
-		c.JSON(200, saving)
+	router.GET("/savings/:id", func(c *gin.Context) {
+		id, err := strconv.Atoi(c.Param("id"))
+		if err != nil {
+			c.String(http.StatusBadRequest, "invalid id")
+		}
+		s, err := savings.FindById(id)
+		if err != nil {
+			c.String(http.StatusNotFound, "not found")
+		} else {
+			c.JSON(200, s)
+		}
 	})
 }
