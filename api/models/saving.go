@@ -10,6 +10,7 @@ type Saving struct {
 }
 
 type AddSavingModel struct {
+	Id     int
 	UserId int     `json:"userid"`
 	Desc   string  `json:"desc"`
 	Target float64 `json:"target"`
