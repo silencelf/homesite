@@ -46,7 +46,7 @@ func SetSavingRoutes(router *gin.Engine) {
 		s.Details = append(s.Details, add)
 		s.Achieved += add.Amount
 
-		c.String(http.StatusOK, "ok")
+		c.String(http.StatusOK, "OK")
 	})
 
 	router.GET("/api/savings", func(c *gin.Context) {
@@ -56,11 +56,11 @@ func SetSavingRoutes(router *gin.Engine) {
 	router.GET("/api/savings/:id", func(c *gin.Context) {
 		id, err := strconv.Atoi(c.Param("id"))
 		if err != nil {
-			c.String(http.StatusBadRequest, "invalid id")
+			c.String(http.StatusBadRequest, "INVALID ID")
 		}
 		s, err := savings.FindById(id)
 		if err != nil {
-			c.String(http.StatusNotFound, "not found")
+			c.String(http.StatusNotFound, "NOT FOUND")
 		} else {
 			c.JSON(200, s)
 		}
