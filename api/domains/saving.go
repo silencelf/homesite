@@ -2,6 +2,7 @@ package domains
 
 import (
 	"errors"
+	"fmt"
 	"homesite/models"
 )
 
@@ -15,12 +16,13 @@ func NewSavingService() SavingDomain {
 	return s
 }
 
-func (s *SavingDomain) FindById(id int) (models.Saving, error) {
-	for _, v := range s.Savings {
+func (s *SavingDomain) FindById(id int) (*models.Saving, error) {
+	for i, v := range s.Savings {
 		if v.ID == id {
-			return v, nil
+			fmt.Println(&v == &s.Savings[i])
+			return &s.Savings[i], nil
 		}
 	}
 
-	return models.NewSaving(), errors.New("not_found")
+	return nil, errors.New("OBJECT NOT FOUND")
 }

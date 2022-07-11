@@ -11,6 +11,7 @@ import (
 
 var (
 	savings = domains.NewSavingService()
+	id      = 0
 )
 
 func SetSavingRoutes(router *gin.Engine) {
@@ -20,23 +21,26 @@ func SetSavingRoutes(router *gin.Engine) {
 			c.AbortWithStatusJSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 			return
 		}
+
+		id = id + 1
 		savings.Savings = append(savings.Savings, models.Saving{
+			ID:     id,
 			UserId: saving.UserId,
 			Desc:   saving.Desc,
 			Target: saving.Target,
 		})
 
-		c.String(http.StatusCreated, "ok")
+		c.String(http.StatusCreated, "OK")
 	})
 
 	router.POST("/api/savings/:id/details", func(c *gin.Context) {
 		id, err := strconv.Atoi(c.Param("id"))
 		if err != nil {
-			c.AbortWithStatusJSON(http.StatusBadRequest, gin.H{"error": "invalid id"})
+			c.AbortWithStatusJSON(http.StatusBadRequest, gin.H{"error": "INVALID ID"})
 		}
 		s, err := savings.FindById(id)
 		if err != nil {
-			c.String(http.StatusNotFound, "not found")
+			c.String(http.StatusNotFound, "NOT FOUND")
 		}
 		var add models.AddSavingDetailModel
 		if err := c.ShouldBind(&add); err != nil {
@@ -46,7 +50,7 @@ func SetSavingRoutes(router *gin.Engine) {
 		s.Details = append(s.Details, add)
 		s.Achieved += add.Amount
 
-		c.String(http.StatusOK, "ok")
+		c.String(http.StatusOK, "OK")
 	})
 
 	router.GET("/api/savings", func(c *gin.Context) {
@@ -56,11 +60,11 @@ func SetSavingRoutes(router *gin.Engine) {
 	router.GET("/api/savings/:id", func(c *gin.Context) {
 		id, err := strconv.Atoi(c.Param("id"))
 		if err != nil {
-			c.String(http.StatusBadRequest, "invalid id")
+			c.String(http.StatusBadRequest, "INVALID ID")
 		}
 		s, err := savings.FindById(id)
 		if err != nil {
-			c.String(http.StatusNotFound, "not found")
+			c.String(http.StatusNotFound, "NOT FOUND")
 		} else {
 			c.JSON(200, s)
 		}
