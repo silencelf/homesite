@@ -4,6 +4,7 @@ go 1.18
 
 require (
 	github.com/gin-gonic/gin v1.8.1
+	github.com/go-sql-driver/mysql v1.6.0
 	github.com/thinkerou/favicon v0.1.0
 )
 
@@ -12,7 +13,6 @@ require (
 	github.com/go-playground/locales v0.14.0 // indirect
 	github.com/go-playground/universal-translator v0.18.0 // indirect
 	github.com/go-playground/validator/v10 v10.11.0 // indirect
-	github.com/go-sql-driver/mysql v1.6.0 // indirect
 	github.com/goccy/go-json v0.9.10 // indirect
 	github.com/google/go-cmp v0.5.7 // indirect
 	github.com/json-iterator/go v1.1.12 // indirect
