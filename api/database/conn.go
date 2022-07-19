@@ -29,3 +29,18 @@ func Init() error {
 	}
 	return nil
 }
+
+func CreatePerson(name string) (int64, error) {
+	db, err := sql.Open("mysql", connString)
+	if err != nil {
+		return -1, err
+	}
+	defer db.Close()
+
+	result, err := db.Exec("insert into person (name) values(?)", name)
+	if err != nil {
+		return -1, err
+	}
+
+	return result.LastInsertId()
+}
